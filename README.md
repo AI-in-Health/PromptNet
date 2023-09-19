@@ -131,7 +131,7 @@ python PromptNet.py \
 --threshold=10 \
 --bs=32 \
 --prompt='./prompt/prompt.pt' \
---random_init=yes \
+--random_init=no \
 --weight_path='./model_weights/${model_weights}' \
 ```
 
