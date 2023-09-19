@@ -168,6 +168,7 @@ class Trainer(BaseTrainer):
         self.val_dataloader = val_dataloader
         self.test_dataloader = test_dataloader
 
+
     def _train_epoch(self, epoch):
         self.model.to(self.device)
         loss_ce = torch.nn.CrossEntropyLoss(ignore_index=0, label_smoothing=0.1,reduction='none')
@@ -178,8 +179,8 @@ class Trainer(BaseTrainer):
             images, reports_ids, reports_masks, align_ids, align_masks = images.to(self.device), reports_ids.to(self.device), \
                                                  reports_masks.to(self.device), align_ids.to(self.device), align_masks.to(self.device)
 
+            #print(torch.cuda.memory_summary())
             output = self.model(reports_ids, align_ids, align_masks, images, mode='train')
-            #pdb.set_trace()
             loss = self.criterion(output, reports_ids, reports_masks, loss_ce)
             train_loss += loss.item()
             self.optimizer.zero_grad()
@@ -189,7 +190,8 @@ class Trainer(BaseTrainer):
                 self.logger.info('[{}/{}] Step: {}/{}, Training Loss: {:.5f}.'
                                  .format(epoch, self.epochs, batch_idx, len(self.train_dataloader),
                                          train_loss / (batch_idx + 1)))
-
+            del output, images, reports_ids, reports_masks, align_ids, align_masks
+            torch.cuda.empty_cache()
         log = {'train_loss': train_loss / len(self.train_dataloader)}
         self.logger.info('[{}/{}] Start to evaluate in the validation set.'.format(epoch, self.epochs))
         self.model.eval()

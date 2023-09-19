@@ -8,7 +8,7 @@ def build_optimizer(args, model):
         if args.F_version == 'v1':
             align_model_params = model.align_model.parameters()
         # If F_version is v2, include only vision parameters of align_model
-        elif args.F_version == 'v2':
+        elif args.F_version == 'v2' or args.F_version == 'v3':
             align_model_params = model.align_model.vision_model.parameters()
         else:
             raise ValueError(f"Unknown F_version: {args.F_version}")
