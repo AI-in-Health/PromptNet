@@ -18,7 +18,7 @@ class MedCapModel(nn.Module):
         self.tokenizer = tokenizer
         self.model = DeCap(args, tokenizer)
 
-        if self.args.train_mode == 'full' and self.args.F_version == "v1":
+        if self.args.train_mode == 'fine-tuning' and self.args.F_version == "v1":
             self.fc_reduce_dim = nn.Linear(in_features=1024, out_features=512)
         else:
             self.fc_reduce_dim = None
@@ -83,14 +83,14 @@ class MedCapModel(nn.Module):
         align_ids = align_ids.long()
 
         align_image_feature = None
-        if self.args.train_mode == 'full':
+        if self.args.train_mode == 'fine-tuning':
             align_image_feature = self.align_encode_images_iu_xray(images)
         if mode == 'train':
             align_text_feature = self.align_model.encode_text(align_ids, align_masks)
             if self.args.noise_inject == 'yes':
                 align_text_feature = self.noise_injection(align_text_feature)
 
-            if self.args.train_mode == 'full':
+            if self.args.train_mode == 'fine-tuning':
                 if self.args.F_version == 'v1':
                     combined_feature = torch.cat([align_text_feature, align_image_feature], dim=-1)
                     align_text_feature = self.fc_reduce_dim(combined_feature)
