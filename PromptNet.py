@@ -64,10 +64,16 @@ def main():
     # Others
     parser.add_argument('--seed', type=int, default=9153, help='.')
     parser.add_argument('--resume', type=str, help='whether to resume the training from existing checkpoints.')
-    parser.add_argument('--train_mode', default='base', choices=['base', 'full'],
-                        help='Training mode: base (text only training) or full (full supervised training)')
+    parser.add_argument('--train_mode', default='base', choices=['base', 'fine-tuning'],
+                        help='Training mode: base (autoencoding) or fine-tuning (full supervised training or fine-tuned on downstream datasets)')
     parser.add_argument('--F_version', default='v1', choices=['v1', 'v2'],)
     parser.add_argument('--clip_update', default='no' , choices=['yes','no'])
+
+    # Fine-tuning
+    parser.add_argument('--random_init', default='yes', choices=['yes', 'no'],
+                        help='Whether to load the pre-trained weights for fine-tuning.')
+    parser.add_argument('--weight_path', default='path_to_default_weights', type=str,
+                        help='Path to the pre-trained model weights.')
     args = parser.parse_args()
 
     # fix random seeds
