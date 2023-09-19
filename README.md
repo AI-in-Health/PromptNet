@@ -96,14 +96,14 @@ The `data` folder contains the following subfolders:
 ## Datasets
 We provide the links for quick downloading datasets.
 
-| Dataset | Download link | 
-| :--- | :--- |
-| COVIDx-CXR-2  | [https://alexswong.github.io/COVID-Net/](https://alexswong.github.io/COVID-Net/) |
-| COVID-CXR | [https://github.com/ieee8023/covid-chestxray-dataset ](https://github.com/ieee8023/covid-chestxray-dataset) |
-| BIMCV-COVID-19 | [https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/) |
-| COVID-HCH | [https://drive.google.com/file/d/1iWJ5kVghec4c_qwf-C22IJriKgP3bv90/view?usp=sharing](https://drive.google.com/file/d/1iWJ5kVghec4c_qwf-C22IJriKgP3bv90/view?usp=sharing) |
-| MIMIC-CXR | [https://physionet.org/content/mimic-cxr/2.0.0/](https://physionet.org/content/mimic-cxr/2.0.0/) |
-| NIH ChestX-ray | [https://nihcc.app.box.com/v/ChestXray-NIHCC](https://nihcc.app.box.com/v/ChestXray-NIHCC) |
+| Dataset | 
+| :--- | 
+| [COVIDx-CXR-2](https://alexswong.github.io/COVID-Net/)  |
+| [COVID-CXR](https://github.com/ieee8023/covid-chestxray-dataset) | 
+| [BIMCV-COVID-19](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/) |
+| [COVID-HCH](https://drive.google.com/file/d/1iWJ5kVghec4c_qwf-C22IJriKgP3bv90/view?usp=sharing) |
+| [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/) | 
+| [NIH ChestX-ray](https://nihcc.app.box.com/v/ChestXray-NIHCC) | 
 
 ## Training
 Here is an example of running command:
@@ -113,9 +113,26 @@ python PromptNet.py \
 --image_dir='./${dataset}/images' \
 --json_path='./${dataset}/annotation.json' \
 --dataset=${dataset} \
---max_seq_length 100 \
---threshold 10 \
---bs 32 
+--max_seq_length=100 \
+--threshold=10 \
+--bs=32 
+```
+
+## Fine-tuning
+Here is an example of running command:
+```
+export dataset=downstream_dataset
+python PromptNet.py \
+--train_mode=fine-tuning \
+--image_dir='./${dataset}/images' \
+--json_path='./${dataset}/annotation.json' \
+--dataset=${dataset} \
+--max_seq_length=100 \
+--threshold=10 \
+--bs=32 \
+--prompt='./prompt/prompt.pt' \
+--random_init=yes \
+--weight_path='./model_weights/${model_weights}' \
 ```
 
 ## Evaluation
