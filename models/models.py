@@ -18,11 +18,6 @@ class MedCapModel(nn.Module):
         self.tokenizer = tokenizer
         self.model = DeCap(args, tokenizer)
 
-        if self.args.train_mode == 'fine-tuning' and self.args.F_version == "v1":
-            self.fc_reduce_dim = nn.Linear(in_features=1024, out_features=512)
-        else:
-            self.fc_reduce_dim = None
-
         self.align_model = MedCLIPModel(vision_cls=MedCLIPVisionModelViT)
         self.align_model.from_pretrained()
         self.prompt = torch.load(args.prompt)
