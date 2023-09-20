@@ -97,6 +97,11 @@ def main():
     metrics = compute_scores
     model = MedCapModel(args, tokenizer)
 
+    if args.train_mode == 'fine-tuning' and args.random_init == 'no':
+        # Load weights from the specified path
+        checkpoint = torch.load(args.weight_path)
+        model.load_state_dict(checkpoint)
+        
     # build optimizer, learning rate scheduler
     optimizer = build_optimizer(args, model)
     lr_scheduler = build_lr_scheduler(args, optimizer)
