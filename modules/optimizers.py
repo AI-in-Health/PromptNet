@@ -5,10 +5,7 @@ from torch import optim
 def build_optimizer(args, model):
     if args.train_mode == 'full' and args.clip_update == 'yes':
         # If F_version is v1, include all parameters of align_model
-        if args.F_version == 'v1':
-            align_model_params = model.align_model.parameters()
-        # If F_version is v2, include only vision parameters of align_model
-        elif args.F_version == 'v2' or args.F_version == 'v3':
+        if args.F_version == 'v1' or args.F_version == 'v2':
             align_model_params = model.align_model.vision_model.parameters()
         else:
             raise ValueError(f"Unknown F_version: {args.F_version}")
