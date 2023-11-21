@@ -101,7 +101,6 @@ We provide the links for quick downloading datasets.
 | [COVIDx-CXR-2](https://alexswong.github.io/COVID-Net/)  |
 | [COVID-CXR](https://github.com/ieee8023/covid-chestxray-dataset) | 
 | [BIMCV-COVID-19](https://bimcv.cipf.es/bimcv-projects/bimcv-covid19/) |
-| [COVID-HCH](https://drive.google.com/file/d/1iWJ5kVghec4c_qwf-C22IJriKgP3bv90/view?usp=sharing) |
 | [MIMIC-CXR](https://physionet.org/content/mimic-cxr/2.0.0/) | 
 | [NIH ChestX-ray](https://nihcc.app.box.com/v/ChestXray-NIHCC) | 
 
