@@ -180,12 +180,3 @@ rm stanford-corenlp-4.5.2.zip
 ## Bugs or Questions?
 
 If you encounter any problems when using the code, or want to report a bug, you can open an issue or email fenglin.liu@eng.ox.ac.uk and yangbang@pku.edu.cn. Please try to specify the problem with details so we can help you better and quicker!
-
-<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
-			<tbody><tr>
-				<td>
-				<br>
-				<p align="middle"><font size="1">
-				<a title="Visit tracker"><img src="//www.clustrmaps.com/map_v2.png?d=YtBHMn-HneDygvf74FP69FvwYPCEagUhhqcWyRdnTwg&t=tt&cl=ffffff"></a>
-				<br/> <br/>	
-				</tbody></table>
