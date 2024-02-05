@@ -11,7 +11,12 @@ from collections import Counter
 def parse_agrs():
     parser = argparse.ArgumentParser()
 
+    # Model loader settings
+    parser.add_argument('--load', type=str, default='ckpt/checkpoint.pth', help='the path to the model weights.')
+    parser.add_argument('--prompt', type=str, default='ckpt/prompt.pth', help='the path to the prompt weights.')
+    
     # Data input settings
+    parser.add_argument('--image_path', type=str, default='example_figs/fig1.jpg', help='the path to the test image.')
     parser.add_argument('--image_dir', type=str, default='data/mimic_cxr/images/', help='the path to the directory containing the data.')
     parser.add_argument('--ann_path', type=str, default='data/mimic_cxr/annotation.json', help='the path to the directory containing the data.')
 
@@ -86,21 +91,16 @@ def parse_agrs():
 
 args = parse_agrs()
 tokenizer = Tokenizer(args)
-current=1
-image_path='testimage/1.png'
+image_path=args.image_path
+checkpoint_path = args.load
+
 image =[Image.open(image_path).convert('RGB')
 ]
 model=R2GenModel(args ,tokenizer).to('cuda' if torch.cuda.is_available() else 'cpu')
 
-if current:
-    state_dict = torch.load('checkpoint/current_checkpoint.pth')
-    model_state_dict = state_dict['state_dict']
-    model.load_state_dict(model_state_dict).to('cuda' if torch.cuda.is_available() else 'cpu')
-
-else:
-    state_dict = torch.load('checkpoint/model_best.pth')
-    model_state_dict = state_dict['state_dict']
-    model.load_state_dict(model_state_dict).to('cuda' if torch.cuda.is_available() else 'cpu')
+state_dict = torch.load(checkpoint_path)
+model_state_dict = state_dict['state_dict']
+model.load_state_dict(model_state_dict).to('cuda' if torch.cuda.is_available() else 'cpu')
 
 model.eval()
 with torch.no_grad():
