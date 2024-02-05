@@ -49,7 +49,7 @@ export model_weights=fully-supervised.pth
 python inference.py \
 --prompt='./ckpt/prompt.pth' \
 --load='./ckpt/${model_weights}' \
---image_path='example_figs/fig1.jpg' 
+--image_path='./example_figs/fig1.jpg' 
 ```
 ## Training Curves 
 <img width=400 src="training_loss_iteration.jpg"/><img width=400 src="training_loss_epoch.jpg"/>
