@@ -5,21 +5,19 @@ from collections import Counter
 
 class Tokenizer(object):
     def __init__(self, args):
-        self.ann_path = args.json_path
+        self.ann_path = args.ann_path
         self.threshold = args.threshold
-        self.dataset_name = args.dataset
+        self.dataset_name = args.dataset_name
         if self.dataset_name == 'iu_xray':
             self.clean_report = self.clean_report_iu_xray
         else:
             self.clean_report = self.clean_report_mimic_cxr
         self.ann = json.loads(open(self.ann_path, 'r').read())
         self.token2idx, self.idx2token = self.create_vocabulary()
-        self.bos_token_id = self.token2idx['<bos>']
-        self.eos_token_id = self.token2idx['<eos>']
-        self.pad_token_id = self.token2idx['<pad>']
 
     def create_vocabulary(self):
         total_tokens = []
+
         for example in self.ann['train']:
             tokens = self.clean_report(example['report']).split()
             for token in tokens:
@@ -29,15 +27,9 @@ class Tokenizer(object):
         vocab = [k for k, v in counter.items() if v >= self.threshold] + ['<unk>']
         vocab.sort()
         token2idx, idx2token = {}, {}
-        token2idx["<pad>"] = 0
-        token2idx["<bos>"] = 1
-        token2idx["<eos>"] = 2
-        idx = 3
-        for token in vocab:
-            if token not in ["<pad>", "<bos>", "<eos>"]:
-                token2idx[token] = idx
-                idx2token[idx] = token
-                idx += 1
+        for idx, token in enumerate(vocab):
+            token2idx[token] = idx + 1
+            idx2token[idx + 1] = token
         return token2idx, idx2token
 
     def clean_report_iu_xray(self, report):
@@ -82,19 +74,18 @@ class Tokenizer(object):
         ids = []
         for token in tokens:
             ids.append(self.get_id_by_token(token))
-        ids = [self.get_id_by_token("<bos>")] + ids + [self.get_id_by_token("<eos>")]
+        ids = [0] + ids + [0]
         return ids
 
     def decode(self, ids):
         txt = ''
         for i, idx in enumerate(ids):
-            if idx == self.get_id_by_token("<eos>"):  # stop decoding when reaching <eos>
-                break
-            if idx > 2:  # only decode the tokens that are not <pad>, <bos>, or <eos>
+            if idx > 0:
                 if i >= 1:
                     txt += ' '
                 txt += self.idx2token[idx]
-            # ignore <pad>, <bos>, and <eos> without breaking the decoding process
+            else:
+                break
         return txt
 
     def decode_batch(self, ids_batch):
