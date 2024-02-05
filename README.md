@@ -37,7 +37,7 @@ We provide a quick implementation of our method.
 First, you should download the pre-trained models and prompts from [Google Drive](https://drive.google.com/drive/folders/1I0ZlSA_onTkhj7uZd9BHlJgSGRaFNLL0?usp=sharing).
 | Type | File Name | 
 | :--- | :--- |
-| Prompts | prompt.pt |
+| Prompts | prompt.pth |
 | Few-shot Model (1%) | few-shot.pth |
 | Fully-supervised Model (100%) | fully-supervised.pth |
 
@@ -47,9 +47,9 @@ export model_weights=few-shot.pth
 or
 export model_weights=fully-supervised.pth
 python inference.py \
---prompt='./prompt/prompt.pt' \
---load='./model_weights/${model_weights}' \
---image_dir='path_to_your_test_images' 
+--prompt='./ckpt/prompt.pth' \
+--load='./ckpt/${model_weights}' \
+--image_path='example_figs/fig1.jpg' 
 ```
 ## Training Curves 
 <img width=400 src="training_loss_iteration.jpg"/><img width=400 src="training_loss_epoch.jpg"/>
