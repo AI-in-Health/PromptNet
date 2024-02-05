@@ -4,6 +4,8 @@ Pillow
 requests
 tqdm
 wget
+medclip
+opencv-python>=4.4.0.42
 nltk>=3.7
 scikit_learn>=1.1.2
 textaugment>=1.3.4
