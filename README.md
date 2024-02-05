@@ -47,7 +47,7 @@ export model_weights=few-shot.pth
 or
 export model_weights=fully-supervised.pth
 python inference.py \
---prompt='./ckpt/prompt.pth' \
+--prompt='./prompt/prompt.pth' \
 --load='./ckpt/${model_weights}' \
 --image_path='./example_figs/fig1.jpg' 
 ```
