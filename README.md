@@ -140,7 +140,7 @@ python PromptNet.py \
 Here is an example of running command:
 ```
 export dataset=downstream_dataset
-python inference.py \
+python test.py \
 --dataset='$dataset' \
 --max_seq_length=100 \
 --threshold=10 \
